@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Health Insurance Cost Prediction</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg,#b3bede);
+            font-family: 'Poppins', sans-serif;
+        }
+        .card {
+            border-radius: 18px;
+            background: #e9e1e8d8;
+            backdrop-filter: blur(6px);
+        }
+        .btn-custom {
+            background: #2e05d4;
+            border-radius: 50px;
+            color: white;
+        }
+        .prediction-box {
+            background: #dcfce7;
+            border-left: 6px solid #22c55e;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-5">
+    <div class="col-md-7 mx-auto">
+        <div class="card shadow p-4">
+
+            <h3 class="text-center mb-4">🏥 Health Insurance Cost Predictor</h3>
+
+            <form method="POST" action="/predict">
+
+                <div class="mb-3">
+                    <label>Age</label>
+                    <input type="number" name="age" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Sex</label>
+                    <select name="sex" class="form-select">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label>BMI</label>
+                    <input type="number" step="0.1" name="bmi" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Children</label>
+                    <input type="number" name="children" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Smoker</label>
+                    <select name="smoker" class="form-select">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label>Region</label>
+                    <select name="region" class="form-select">
+                        <option value="southwest">Southwest</option>
+                        <option value="southeast">Southeast</option>
+                        <option value="northwest">Northwest</option>
+                        <option value="northeast">Northeast</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-custom w-100 mt-3">Predict</button>
+            </form>
+
+            {% if prediction %}
+            <div class="prediction-box mt-4 text-center">
+                <h5>Predicted Insurance Cost: <strong>${{ prediction }}</strong></h5>
+            </div>
+            {% endif %}
+
+            {% if shap_img %}
+                <h4>Feature Contribution (SHAP)</h4>
+                <img src="/static/{{ shap_img }}" width="600px">
+            {% endif %}
+
+
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
